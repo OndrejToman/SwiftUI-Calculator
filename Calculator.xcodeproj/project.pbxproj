@@ -13,6 +13,7 @@
 		F53ADFC8290D8EBB001B553C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F53ADFC7290D8EBB001B553C /* Preview Assets.xcassets */; };
 		F53ADFD0290D92BE001B553C /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53ADFCF290D92BE001B553C /* CustomColors.swift */; };
 		F53ADFD3290DA369001B553C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F53ADFD2290DA369001B553C /* README.md */; };
+		F53ADFD7290DC4DF001B553C /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53ADFD6290DC4DF001B553C /* ButtonStyles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		F53ADFC7290D8EBB001B553C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F53ADFCF290D92BE001B553C /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		F53ADFD2290DA369001B553C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F53ADFD6290DC4DF001B553C /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				F53ADFC0290D8EBA001B553C /* CalculatorApp.swift */,
 				F53ADFC2290D8EBA001B553C /* ContentView.swift */,
 				F53ADFD1290D92D9001B553C /* Extensions */,
+				F53ADFD4290DC4A4001B553C /* Styles */,
 				F53ADFC4290D8EBB001B553C /* Assets.xcassets */,
 				F53ADFC6290D8EBB001B553C /* Preview Content */,
 			);
@@ -79,6 +82,14 @@
 				F53ADFCF290D92BE001B553C /* CustomColors.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F53ADFD4290DC4A4001B553C /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				F53ADFD6290DC4DF001B553C /* ButtonStyles.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F53ADFC3290D8EBA001B553C /* ContentView.swift in Sources */,
+				F53ADFD7290DC4DF001B553C /* ButtonStyles.swift in Sources */,
 				F53ADFD0290D92BE001B553C /* CustomColors.swift in Sources */,
 				F53ADFC1290D8EBA001B553C /* CalculatorApp.swift in Sources */,
 			);

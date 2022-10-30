@@ -35,16 +35,16 @@ struct ContentView: View {
                 // MARK: -
                 HStack(spacing: 15) {
                     Button {
-                        calculatorModel.clearPrimaryText()
+                        calculatorModel.clearEverything()
                     } label: {
                         Text("AC")
                     }
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.toggleNegativeNumber()
                     } label: {
-                        Text("+/-")
+                        Image(systemName: "plusminus")
                     }
                     .isDefaultCalculatorButton()
                     
@@ -56,7 +56,7 @@ struct ContentView: View {
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.selectAction(.divide)
                     } label: {
                         Text("/")
                     }
@@ -88,7 +88,7 @@ struct ContentView: View {
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.selectAction(.multiply)
                     } label: {
                         Text("×")
                     }
@@ -119,7 +119,7 @@ struct ContentView: View {
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.selectAction(.substract)
                     } label: {
                         Text("-")
                     }
@@ -150,9 +150,9 @@ struct ContentView: View {
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.selectAction(.add)
                     } label: {
-                        Text("×")
+                        Text("+")
                     }
                     .isDefaultCalculatorButton()
                 }
@@ -168,7 +168,7 @@ struct ContentView: View {
                         .isDefaultCalculatorButton()
                         
                         Button {
-                            
+                            calculatorModel.toggleDecimalNumber()
                         } label: {
                             Text(",")
                         }
@@ -176,7 +176,7 @@ struct ContentView: View {
                     }
                     
                     Button {
-                        
+                        calculatorModel.doMath()
                     } label: {
                         Text("=")
                     }

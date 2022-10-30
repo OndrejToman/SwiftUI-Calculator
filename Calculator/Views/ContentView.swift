@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var calculatorModel: CalculatorModel
+    
     var body: some View {
         VStack {
             
@@ -15,11 +17,13 @@ struct ContentView: View {
             
             VStack {
                 // Memory
-                Text("10 x 10")
+                Text(calculatorModel.secondaryText)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 // Result
-                Text("100")
+                Text(calculatorModel.primaryText)
+                    .font(.system(size: 60, weight: .heavy))
+                    .foregroundColor(Color.textPrimary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding(.trailing, 20)
@@ -31,7 +35,7 @@ struct ContentView: View {
                 // MARK: -
                 HStack(spacing: 15) {
                     Button {
-                        print("AC")
+                        calculatorModel.clearPrimaryText()
                     } label: {
                         Text("AC")
                     }
@@ -63,21 +67,21 @@ struct ContentView: View {
                 // MARK: -
                 HStack(spacing: 15) {
                     Button {
-                        
+                        calculatorModel.addNumber(7)
                     } label: {
                         Text("7")
                     }
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.addNumber(8)
                     } label: {
                         Text("8")
                     }
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.addNumber(9)
                     } label: {
                         Text("9")
                     }
@@ -94,21 +98,21 @@ struct ContentView: View {
                 // MARK: -
                 HStack(spacing: 15) {
                     Button {
-                        
+                        calculatorModel.addNumber(4)
                     } label: {
                         Text("4")
                     }
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.addNumber(5)
                     } label: {
                         Text("5")
                     }
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.addNumber(6)
                     } label: {
                         Text("6")
                     }
@@ -125,21 +129,21 @@ struct ContentView: View {
                 // MARK: -
                 HStack(spacing: 15) {
                     Button {
-                        
+                        calculatorModel.addNumber(1)
                     } label: {
                         Text("1")
                     }
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.addNumber(2)
                     } label: {
                         Text("2")
                     }
                     .isDefaultCalculatorButton()
                     
                     Button {
-                        
+                        calculatorModel.addNumber(3)
                     } label: {
                         Text("3")
                     }
@@ -157,7 +161,7 @@ struct ContentView: View {
                 HStack(spacing: 15) {
                     HStack(spacing: 15) {
                         Button {
-                            
+                            calculatorModel.addNumber(0)
                         } label: {
                             Text("0")
                         }
@@ -193,5 +197,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(CalculatorModel())
     }
 }

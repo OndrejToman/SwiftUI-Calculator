@@ -37,7 +37,12 @@ struct ContentView: View {
                     Button {
                         calculatorModel.clearEverything()
                     } label: {
-                        Text("AC")
+                        //Text("AC")
+                        if calculatorModel.primaryText == "0" || calculatorModel.primaryText == "-0" {
+                            Text("AC")
+                        } else {
+                            Image(systemName: "delete.backward.fill")
+                        }
                     }
                     .isDefaultCalculatorButton()
                     

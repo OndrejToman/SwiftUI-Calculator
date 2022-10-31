@@ -72,23 +72,54 @@ class CalculatorModel: ObservableObject {
         secondaryText = tempText
     }
     
-    // Resets primaryText back to "0"
+    // Clears the last digit from Primary Text
+    // When there is no more decimal digits left, this function will switch decimal mode off
     func clearLastDigit() {
-        
-    }
-    
-    // Resets Calculator to its initial state
-    func clearEverything() {
-        wholeNumber = "0"
-        decimalNumber = ""
-        isNumberNegative = false
-        isNumberDecimal = false
-        selectedAction = .none
-        temporaryNumber = ""
-        currentEquation = []
+        // If number is not decimal
+        if !isNumberDecimal {
+            // Remove last number if whole number isn't already "0"
+            if wholeNumber != "0" {
+                wholeNumber.removeLast()
+            }
+            
+            // If all numbers were removed, we simply assign "0" as our whole number
+            if wholeNumber.count == 0 {
+                wholeNumber = "0"
+            }
+        } else {
+            // Remove last position from decimalNumber. We can do this even on empty string.
+            decimalNumber.removeLast()
+            
+            // If we removed last position from decimalNumber, we will set calculator decimal number state to false
+            if decimalNumber.count == 0 {
+                isNumberDecimal = false
+            }
+        }
         
         renderPrimaryText()
-        renderSecondaryText()
+    }
+    
+    // Resets Calculator to its initial state or clears the last digit
+    func clearEverything() {
+        
+        // Reset everything if wholeNumber is "0" and decimalNumber is empty
+        // This means we have cleared tho whole Primary Text and expected behavior is now to reset the whole app
+        if wholeNumber == "0" && decimalNumber == "" {
+            wholeNumber = "0"
+            decimalNumber = ""
+            isNumberNegative = false
+            isNumberDecimal = false
+            selectedAction = .none
+            temporaryNumber = ""
+            currentEquation = []
+            
+            renderSecondaryText()
+        } else {
+            clearLastDigit()
+        }
+        
+        renderPrimaryText()
+        
     }
     
     // Resets properties related to Calculator Primary Text field
@@ -123,7 +154,7 @@ class CalculatorModel: ObservableObject {
         selectedAction = action
         
         // Clear Primary Text field
-        // clearPrimaryText()
+        clearPrimaryText()
         
         // Render Secondary Text field
         renderSecondaryText()

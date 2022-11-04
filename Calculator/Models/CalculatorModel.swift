@@ -18,17 +18,19 @@ enum CalculatorAction: String {
 
 class CalculatorModel: ObservableObject {
     
-    /// Primary Text is the big text and main line above the keyboard
-    @Published var primaryText = "0"
+    // MARK: - Published values
     
-    /// Secondary Text is the smaller, gray line above the keyboard
-    @Published var secondaryText = ""
+    /// Primary Row is the big text and main line above the keyboard
+    @Published var primaryRow = "0"
     
-    /// Indicates if the number is too large to render
+    /// Secondary Row is the smaller, gray line above the keyboard
+    @Published var secondaryRow = ""
+    
+    /// Indicates if the number for Primary Row is too large to render (more than 9 digits)
     @Published var tooLargeResult = false
     
-    /// Which action us currently selected on Calculator
-    private var selectedAction: CalculatorAction = .none
+    
+    // MARK: - Primary Row states
     
     /// Is current Primary number negative?
     private var isNumberNegative = false
@@ -36,63 +38,58 @@ class CalculatorModel: ObservableObject {
     /// Does current primary number has decimal part?
     private var isNumberDecimal = false
     
-    /// All numbers and symbols that connect together the current equation
-    private var currentEquation: [String] = []
-    
-    /// Temporary number is stored after a user selects action.
-    private var temporaryNumber = ""
-    
     /// Whole part of Primary number
     private var wholeNumber = "0"
     
     /// Decimal part of Primary number
     private var decimalNumber = ""
     
-    /// Adds number to Primary Text
-    /// - Parameter number: Number to be added to Primary Text
-    func addNumber(_ number: Int) {
-        // Start of the app or after reset, number is "0"
-        if wholeNumber == "0" && !isNumberDecimal {
-            wholeNumber = "\(number)"
-            renderPrimaryText()
-            return
-        }
-        
-        // We will check if the number (with "-" and "," symbols) don't have more than 9 characters
-        if wholeNumber.count + decimalNumber.count + (isNumberDecimal ? 1 : 0) + (isNumberNegative ? 1 : 0) < 9 {
-            // If number IS NOT decimal, we will append to the whole part
-            // If number IS decimal, we will append to the decimal part
-            if !isNumberDecimal {
-                wholeNumber.append("\(number)")
-            } else {
-                decimalNumber.append("\(number)")
-            }
-            
-            renderPrimaryText()
-        }
-    }
     
-    /// Renders the Primary Text.
+    // MARK: - Secondary Row states
+    
+    /// Indicates which action is currently selected on Calculator
+    private var selectedAction: CalculatorAction = .none
+    
+    /// All numbers and symbols that connect together the current equation
+    private var currentEquation: [String] = []
+    
+    
+    // MARK: - Helper states
+    
+    /// Temporary number is storage for value of Primary Row, after user clicks on button which selects action
+    private var temporaryNumber = ""
+    
+    /// How many characters can we fit into Primary Row
+    private var maximumPrimaryRowCharacters = 9
+    
+    
+    // MARK: - Rendering methods
+    
+    /// Renders the current number from Calculators internal state to Primary Row
     /// This function connects the whole and decimal part of the number, automatically adds "-" if primary number is negative
-    private func renderPrimaryText() {
+    private func renderPrimaryRow() {
         let prepend = isNumberNegative ? "-" : ""
         let dot = isNumberDecimal ? "," : ""
-        primaryText = "\(prepend)\(wholeNumber)\(dot)\(decimalNumber)"
+        primaryRow = "\(prepend)\(wholeNumber)\(dot)\(decimalNumber)"
     }
     
-    private func renderSecondaryText() {
+    /// Renders the current equation to Secondary Row
+    private func renderSecondaryRow() {
         var tempText = ""
         
         for text in currentEquation {
             tempText.append(text)
         }
         
-        secondaryText = tempText
+        secondaryRow = tempText
     }
     
-    /// Clears the last digit from Primary Text
-    /// When there is no more decimal digits left, this function will switch the decimal mode off
-    func clearLastDigit() {
+    
+    // MARK: - Clearing methods
+    
+    /// Clears the last digit from Primary Row. When there is no more decimal digits left, this function will switch the decimal mode off.
+    /// - Parameter reRender: Determines if the method will re-render the Primary Row.
+    func clearLastDigit(_ reRender: Bool = false) {
         // If number is not decimal
         if !isNumberDecimal {
             // Remove last number if whole number isn't already "0"
@@ -114,28 +111,14 @@ class CalculatorModel: ObservableObject {
             }
         }
         
-        renderPrimaryText()
-    }
-    
-    /// This function either removes the last digit from Primary Number or resets the whole calculator.
-    /// The Calculator is resetted only if there are no numbers (other than 0) left in the Primary Number.
-    func backButtonPressed() {
-        // Reset everything if wholeNumber is "0" and decimalNumber is empty
-        // This means we have cleared tho whole Primary Text and expected behavior is now to reset the whole app
-        if wholeNumber == "0" && decimalNumber == "" {
-            resetCalculator()
-            
-            renderSecondaryText()
-        } else {
-            clearLastDigit()
+        if reRender {
+            renderPrimaryRow()
         }
-        
-        renderPrimaryText()
-        
     }
     
-    /// Resets the Calculator to its initial state
-    private func resetCalculator() {
+    /// Resets the Calculator to its initial state.
+    /// - Parameter reRender: Determines if the method will re-render Primary and Secondary rows.
+    private func resetCalculator(_ reRender: Bool = false) {
         wholeNumber = "0"
         decimalNumber = ""
         isNumberNegative = false
@@ -143,70 +126,119 @@ class CalculatorModel: ObservableObject {
         selectedAction = .none
         temporaryNumber = ""
         currentEquation = []
+        
+        if reRender {
+            renderPrimaryRow()
+            renderSecondaryRow()
+        }
     }
     
     
     /// Resets properties related to Calculator Primary Text field
     /// - Parameter reRender: Determines if this function will re-render the primary text right away
-    private func clearPrimaryText(_ reRender: Bool = true) {
+    private func clearPrimaryText(_ reRender: Bool = false) {
         wholeNumber = "0"
         decimalNumber = ""
         isNumberNegative = false
         isNumberDecimal = false
         
         if reRender {
-            renderPrimaryText()
+            renderPrimaryRow()
         }
     }
     
-    /// Select action which will be executed in Calculator
+    
+    // MARK: - Button action methods
+    
+    /// This function either removes the last digit from Primary Number or resets the whole calculator.
+    ///
+    /// This depends on the value of the Primary Row. If the Primary row has value other than "0",
+    func backButtonPressed() {
+        // Reset everything if Primary Row is equal to "0", otherwise clear the last digit of Primary Row
+        if wholeNumber == "0" && decimalNumber == "" {
+            resetCalculator(true)
+        } else {
+            clearLastDigit(true)
+        }
+    }
+    
+    /// Adds one digit to Primary Row.
+    /// If the current Primary Row value is "0", then the "0" is replaced by the new number.
+    /// - Parameter number: Number to be added
+    func addNumberToPrimaryRow(_ number: Int) {
+        
+        // When Primary row contains only "0" and nothing else, replace "0" with the new number and return early
+        if wholeNumber == "0" && !isNumberDecimal {
+            wholeNumber = "\(number)"
+            renderPrimaryRow()
+            return
+        }
+        
+        // We will check if the number (with "-" and "," symbols) don't have more than 9 characters
+        if wholeNumber.count + decimalNumber.count + (isNumberDecimal ? 1 : 0) + (isNumberNegative ? 1 : 0) < maximumPrimaryRowCharacters {
+            // Decide if we want the new number to be appended to whole or decimal part of the number
+            if !isNumberDecimal {
+                wholeNumber.append("\(number)")
+            } else {
+                decimalNumber.append("\(number)")
+            }
+            
+            // Re-render the Primary Row
+            renderPrimaryRow()
+        }
+    }
+    
+    /// Select action from predefined actions.
+    ///
+    /// This action will be executed when "=" button is pressed. If another action is already selected, then the previous action will be swapped for the new one, without removing the current value of the Primary Row
     /// - Parameter action: Select CalculatorAction
     func selectAction(_ action: CalculatorAction) {
-        // If there is no previously selected action
+        // Determines if there is already action selected
         if selectedAction == .none {
-            // Append current Primary value to Secondary text
-            currentEquation.append(primaryText)
-            // Save current value in temporary number (will be handy later)
-            temporaryNumber = primaryText
+            // Append current Primary Row's value to Secondary Row
+            currentEquation.append(primaryRow)
+            // Save current value in temporary number. This will be used to make the calculation.
+            temporaryNumber = primaryRow
+            // Clear Primary Row, to get rid of the first number
+            clearPrimaryText(true)
         } else {
             // Remove last action from the list
             currentEquation.removeLast()
         }
         
-        // Append right symbol for selected action
+        // Append right symbol to current equation for selected action
         currentEquation.append(" \(action.rawValue) ")
         
-        // Save selected action
+        // Save selected action to internal state
         selectedAction = action
         
-        // Clear Primary Text field
-        clearPrimaryText()
-        
-        // Render Secondary Text field
-        renderSecondaryText()
+        // Render Secondary Row
+        renderSecondaryRow()
     }
     
-    /// Primary number can be negative or positive.
-    /// This function toggles the internal setting
-    /// - Parameter reRender: Determines if this function will re-render the primary text right away
-    func toggleNegativeNumber(_ reRender: Bool = true) {
-        // This function can be executed only if we have less than 9 characters currently in display
-        if wholeNumber.count + decimalNumber.count + (isNumberDecimal ? 1 : 0) < 9 {
+    /// Primary number can be negative or positive. This function toggles the internal setting determining that.
+    ///
+    /// This function can be executed only if the current Primary Row has 8 or less characters, so we can fit the "-" symbol in.
+    /// - Parameter reRender: Determines if this function will re-render the Primary Row
+    func toggleNegativeNumber(_ reRender: Bool = false) {
+        // Check for the length of the Primary Row
+        if wholeNumber.count + decimalNumber.count + (isNumberDecimal ? 1 : 0) < maximumPrimaryRowCharacters {
             isNumberNegative.toggle()
             
             if reRender {
-                renderPrimaryText()
+                renderPrimaryRow()
             }
         }
     }
     
-    /// Primary number can be decimal or whole.
-    /// This function toggles the internal setting
+    /// Primary number can be decimal or whole. This function toggles the internal setting.
+    ///
+    /// This function can be executed only if the current Primary Row has 7 or less characters. Tha is because we can't add 10th character, if 9th character would be ",". So this rule ensures that at least one character will be decimal.
     /// - Parameter reRender: Determines if this function will re-render the primary text right away
     func toggleDecimalNumber(_ reRender: Bool = true) {
         // This function can be executed only if we have less than 8 characters currently in display
-        // 8 characters because we can't add 10th character, if 9th character would be ","
-        if wholeNumber.count + decimalNumber.count + (isNumberNegative ? 1 : 0) < 8 {
+        //
+        if wholeNumber.count + decimalNumber.count + (isNumberNegative ? 1 : 0) < (maximumPrimaryRowCharacters - 1) {
             if isNumberDecimal {
                 wholeNumber.append(decimalNumber)
                 decimalNumber = ""
@@ -216,19 +248,15 @@ class CalculatorModel: ObservableObject {
             }
             
             if reRender {
-                renderPrimaryText()
+                renderPrimaryRow()
             }
         }
     }
     
-    func getRealNumber(from: String) -> Double? {
-        return Double(from.replacingOccurrences(of: ",", with: "."))
-    }
-    
-    /// Executes currently selected operation on two numbers
+    /// Executes currently selected action on two numbers: Previousl number and current number from the Primary Row.
     func doMath() {
         // Both numbers are valid, otherwise return early
-        guard let num1 = getRealNumber(from: temporaryNumber), let num2 = getRealNumber(from: primaryText) else {
+        guard let num1 = getRealNumber(from: temporaryNumber), let num2 = getRealNumber(from: primaryRow) else {
             return
         }
         
@@ -238,30 +266,40 @@ class CalculatorModel: ObservableObject {
             
         case .add:
             // Push number 2 to Secondary text
-            currentEquation.append(primaryText)
-            renderSecondaryText()
+            currentEquation.append(primaryRow)
+            renderSecondaryRow()
             changePrimaryText(to: num1 + num2)
             
         case .substract:
             // Push number 2 to Secondary text
-            currentEquation.append(primaryText)
-            renderSecondaryText()
+            currentEquation.append(primaryRow)
+            renderSecondaryRow()
             changePrimaryText(to: num1 - num2)
             
         case .multiply:
             // Push number 2 to Secondary text
-            currentEquation.append(primaryText)
-            renderSecondaryText()
+            currentEquation.append(primaryRow)
+            renderSecondaryRow()
             changePrimaryText(to: num1 * num2)
             
         case .divide:
             // Push number 2 to Secondary text
-            currentEquation.append(primaryText)
-            renderSecondaryText()
+            currentEquation.append(primaryRow)
+            renderSecondaryRow()
             changePrimaryText(to: num1 / num2)
         }
         
         selectedAction = .none
+    }
+    
+    
+    // MARK: - Math methods
+    
+    /// Returns number in Double format from String
+    /// - Parameter from: Number string which will be deconstructed to the number
+    /// - Returns: Double number returned from the String provided
+    private func getRealNumber(from: String) -> Double? {
+        return Double(from.replacingOccurrences(of: ",", with: "."))
     }
     
     /// Changes primary text to certail value, based on number input
@@ -270,9 +308,9 @@ class CalculatorModel: ObservableObject {
         let tempNumberString = String(number)
         
         // Quick hack to solve too big numbers
-        // Has some problems, like 0.1 + 0.3, but works for most cases
+        // Has some problems, like 0.1 + 0.3, but works for really simple math
         // TODO: Fix this in the future.
-        if tempNumberString.count > 9 {
+        if tempNumberString.count > (maximumPrimaryRowCharacters - 1) {
             // Set that result is too large to display
             tooLargeResult = true
             // Reset calculator
@@ -280,21 +318,23 @@ class CalculatorModel: ObservableObject {
         } else {
             let wholePart = String(tempNumberString.replacingOccurrences(of: "-", with: "").split(separator: ".")[0])
             
-            // We will find out if the number is negative or positive
+            // Set the internal state of positive / negative number
             isNumberNegative = number < 0
             
+            // Reset the current equation
             currentEquation = []
             
+            // Set the whole number part
             wholeNumber = wholePart
             
-            // We will find out if the number is decimal
+            // We will find out if the number is decimal. If so, add the decimal part.
             if Double(tempNumberString.split(separator: ".")[1])! > 0 {
                 isNumberDecimal = true
                 decimalNumber = String(tempNumberString.split(separator: ".")[1])
             }
         }
         
-        renderPrimaryText()
-        renderSecondaryText()
+        renderPrimaryRow()
+        renderSecondaryRow()
     }
 }

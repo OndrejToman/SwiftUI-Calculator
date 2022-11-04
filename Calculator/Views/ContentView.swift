@@ -24,16 +24,16 @@ struct ContentView: View {
             
             VStack {
                 // Memory
-                if calculatorModel.secondaryText.count == 0 {
+                if calculatorModel.secondaryRow.count == 0 {
                     Text(" ")
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 } else {
-                    Text(calculatorModel.secondaryText)
+                    Text(calculatorModel.secondaryRow)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
                 
                 // Result
-                Text(calculatorModel.primaryText)
+                Text(calculatorModel.primaryRow)
                     .font(.system(size: 60, weight: .heavy))
                     .foregroundColor(Color.textPrimary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -55,7 +55,7 @@ struct ContentView: View {
                         calculatorModel.backButtonPressed()
                     } label: {
                         //Text("AC")
-                        if calculatorModel.primaryText == "0" || calculatorModel.primaryText == "-0" {
+                        if calculatorModel.primaryRow == "0" || calculatorModel.primaryRow == "-0" {
                             Text("AC")
                         } else {
                             Image(systemName: "delete.backward.fill")
@@ -64,7 +64,7 @@ struct ContentView: View {
                     .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
-                        calculatorModel.toggleNegativeNumber()
+                        calculatorModel.toggleNegativeNumber(true)
                     } label: {
                         Image(systemName: "plusminus")
                     }
@@ -89,21 +89,21 @@ struct ContentView: View {
                 // MARK: -
                 HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     Button {
-                        calculatorModel.addNumber(7)
+                        calculatorModel.addNumberToPrimaryRow(7)
                     } label: {
                         Text("7")
                     }
                     .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
-                        calculatorModel.addNumber(8)
+                        calculatorModel.addNumberToPrimaryRow(8)
                     } label: {
                         Text("8")
                     }
                     .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
-                        calculatorModel.addNumber(9)
+                        calculatorModel.addNumberToPrimaryRow(9)
                     } label: {
                         Text("9")
                     }
@@ -120,21 +120,21 @@ struct ContentView: View {
                 // MARK: -
                 HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     Button {
-                        calculatorModel.addNumber(4)
+                        calculatorModel.addNumberToPrimaryRow(4)
                     } label: {
                         Text("4")
                     }
                     .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
-                        calculatorModel.addNumber(5)
+                        calculatorModel.addNumberToPrimaryRow(5)
                     } label: {
                         Text("5")
                     }
                     .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
-                        calculatorModel.addNumber(6)
+                        calculatorModel.addNumberToPrimaryRow(6)
                     } label: {
                         Text("6")
                     }
@@ -151,21 +151,21 @@ struct ContentView: View {
                 // MARK: -
                 HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     Button {
-                        calculatorModel.addNumber(1)
+                        calculatorModel.addNumberToPrimaryRow(1)
                     } label: {
                         Text("1")
                     }
                     .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
-                        calculatorModel.addNumber(2)
+                        calculatorModel.addNumberToPrimaryRow(2)
                     } label: {
                         Text("2")
                     }
                     .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
-                        calculatorModel.addNumber(3)
+                        calculatorModel.addNumberToPrimaryRow(3)
                     } label: {
                         Text("3")
                     }
@@ -183,7 +183,7 @@ struct ContentView: View {
                 HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     HStack(spacing: 15) {
                         Button {
-                            calculatorModel.addNumber(0)
+                            calculatorModel.addNumberToPrimaryRow(0)
                         } label: {
                             Text("0")
                         }

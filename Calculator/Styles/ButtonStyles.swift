@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct DefaultCalculatorButton: ButtonStyle {
+    var buttonHeight: CGFloat
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .bold()
-            .frame(maxWidth: .infinity, minHeight: 77)
+            .frame(maxWidth: .infinity, minHeight: buttonHeight)
             .background(configuration.isPressed ? Color.buttonBackgroundPressed : Color.buttonBackground)
             .foregroundColor(Color.textPrimary)
             .cornerRadius(24)
@@ -19,10 +21,12 @@ struct DefaultCalculatorButton: ButtonStyle {
 }
 
 struct PrimaryCalculatorButton: ButtonStyle {
+    var buttonHeight: CGFloat
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .bold()
-            .frame(maxWidth: .infinity, minHeight: 77)
+            .frame(maxWidth: .infinity, minHeight: buttonHeight)
             .background(Color.cPrimary)
             .foregroundColor(Color.white)
             .cornerRadius(24)
@@ -31,11 +35,11 @@ struct PrimaryCalculatorButton: ButtonStyle {
 }
 
 extension View {
-    func isDefaultCalculatorButton() -> some View {
-        buttonStyle(DefaultCalculatorButton())
+    func isDefaultCalculatorButton(btnHeight: CGFloat = 77) -> some View {
+        buttonStyle(DefaultCalculatorButton(buttonHeight: btnHeight))
     }
     
-    func isPrimaryCalculatorButton() -> some View {
-        buttonStyle(PrimaryCalculatorButton())
+    func isPrimaryCalculatorButton(btnHeight: CGFloat = 77) -> some View {
+        buttonStyle(PrimaryCalculatorButton(buttonHeight: btnHeight))
     }
 }

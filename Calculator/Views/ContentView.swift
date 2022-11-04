@@ -10,15 +10,27 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var calculatorModel: CalculatorModel
     
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    
+    @State private var displayAlert = true
+    
+    private let portraitButtonHeight: CGFloat = 77
+    private let landscapeButtonHeight: CGFloat = 32
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             
             Spacer()
             
             VStack {
                 // Memory
-                Text(calculatorModel.secondaryText)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                if calculatorModel.secondaryText.count == 0 {
+                    Text(" ")
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                } else {
+                    Text(calculatorModel.secondaryText)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
                 
                 // Result
                 Text(calculatorModel.primaryText)
@@ -28,14 +40,19 @@ struct ContentView: View {
             }
             .padding(.trailing, 20)
             .padding(.leading, 20)
+            .padding(.bottom, verticalSizeClass == .compact ? 0 : 20)
+            
+            if verticalSizeClass == .compact {
+                Spacer()
+            }
             
             // Keyboard
-            VStack(spacing: 15) {
+            VStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                 
                 // MARK: -
-                HStack(spacing: 15) {
+                HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     Button {
-                        calculatorModel.clearEverything()
+                        calculatorModel.backButtonPressed()
                     } label: {
                         //Text("AC")
                         if calculatorModel.primaryText == "0" || calculatorModel.primaryText == "-0" {
@@ -44,140 +61,140 @@ struct ContentView: View {
                             Image(systemName: "delete.backward.fill")
                         }
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.toggleNegativeNumber()
                     } label: {
                         Image(systemName: "plusminus")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         
                     } label: {
                         Text("%")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.selectAction(.divide)
                     } label: {
                         Text("/")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
 
                 }
                 
                 // MARK: -
-                HStack(spacing: 15) {
+                HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     Button {
                         calculatorModel.addNumber(7)
                     } label: {
                         Text("7")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.addNumber(8)
                     } label: {
                         Text("8")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.addNumber(9)
                     } label: {
                         Text("9")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.selectAction(.multiply)
                     } label: {
                         Text("×")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                 }
                 
                 // MARK: -
-                HStack(spacing: 15) {
+                HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     Button {
                         calculatorModel.addNumber(4)
                     } label: {
                         Text("4")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.addNumber(5)
                     } label: {
                         Text("5")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.addNumber(6)
                     } label: {
                         Text("6")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.selectAction(.substract)
                     } label: {
                         Text("-")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                 }
                 
                 // MARK: -
-                HStack(spacing: 15) {
+                HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     Button {
                         calculatorModel.addNumber(1)
                     } label: {
                         Text("1")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.addNumber(2)
                     } label: {
                         Text("2")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.addNumber(3)
                     } label: {
                         Text("3")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     
                     Button {
                         calculatorModel.selectAction(.add)
                     } label: {
                         Text("+")
                     }
-                    .isDefaultCalculatorButton()
+                    .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                 }
                 
                 // MARK: -
-                HStack(spacing: 15) {
+                HStack(spacing: verticalSizeClass == .compact ? 10 : 15) {
                     HStack(spacing: 15) {
                         Button {
                             calculatorModel.addNumber(0)
                         } label: {
                             Text("0")
                         }
-                        .isDefaultCalculatorButton()
+                        .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                         
                         Button {
                             calculatorModel.toggleDecimalNumber()
                         } label: {
                             Text(",")
                         }
-                        .isDefaultCalculatorButton()
+                        .isDefaultCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                     }
                     
                     Button {
@@ -185,15 +202,24 @@ struct ContentView: View {
                     } label: {
                         Text("=")
                     }
-                    .isPrimaryCalculatorButton()
+                    .isPrimaryCalculatorButton(btnHeight: verticalSizeClass == .compact ? landscapeButtonHeight : portraitButtonHeight)
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding(.top, 40)
+            .padding(.top, verticalSizeClass == .compact ? 20 : 40)
+            .padding(.bottom, 20)
             .padding(.leading, 20)
             .padding(.trailing, 20)
             .background(Color.keyboardBackground)
         }
+        .alert("Result is too large to display properly", isPresented: $calculatorModel.tooLargeResult, actions: {
+            Button(role: .cancel) {
+                calculatorModel.tooLargeResult = false
+            } label: {
+                Text("Dismiss")
+            }
+
+        })
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.white)
     }

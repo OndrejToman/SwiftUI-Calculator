@@ -221,7 +221,7 @@ struct ContentView: View {
 
         })
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.white)
+        .background(Color.appBackground)
     }
 }
 

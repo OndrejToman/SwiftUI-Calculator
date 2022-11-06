@@ -23,4 +23,7 @@ extension Color {
     // Main
     static var cPrimary = Color("Primary")
     static var primaryButtoShadow = Color("Primary Button Shadow")
+    
+    // Background
+    static var appBackground = Color("App Background")
 }

@@ -17,4 +17,4 @@ This is a calculator app, written in Swift and SwiftUI. This app is meant for me
 This calculator app is only for entertainment and educational purposes. Do not use this calculator to calculate anything important, or rather don't use this calculator to calculate anything at all. Always use more stable and reliable alternatives.
 
 ## Credits
-- Device mockups in this Readme are from [Flat iPhone Mockup 14/13/12/11/X/SE/8/7/6](https://www.figma.com/community/file/882254519102673494) by Richard, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- Device mockups in this Readme are from [Flat iPhone Mockup 14/13/12/11/X/SE/8/7/6](https://www.figma.com/community/file/882254519102673494) by Richard Horvath, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)

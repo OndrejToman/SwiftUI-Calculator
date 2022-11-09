@@ -15,6 +15,8 @@
 		F53ADFD3290DA369001B553C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F53ADFD2290DA369001B553C /* README.md */; };
 		F53ADFD7290DC4DF001B553C /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53ADFD6290DC4DF001B553C /* ButtonStyles.swift */; };
 		F599932C29182BA4003D636E /* heading.png in Resources */ = {isa = PBXBuildFile; fileRef = F599932B29182BA4003D636E /* heading.png */; };
+		F5AE3AB7291C3DD0009B0501 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AE3AB6291C3DD0009B0501 /* DefaultButton.swift */; };
+		F5AE3AB9291C4835009B0501 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AE3AB8291C4835009B0501 /* PrimaryButton.swift */; };
 		F5F24627290EAB040039EF2C /* CalculatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F24626290EAB040039EF2C /* CalculatorModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +30,8 @@
 		F53ADFD2290DA369001B553C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F53ADFD6290DC4DF001B553C /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		F599932B29182BA4003D636E /* heading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heading.png; sourceTree = "<group>"; };
+		F5AE3AB6291C3DD0009B0501 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
+		F5AE3AB8291C4835009B0501 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		F5F24626290EAB040039EF2C /* CalculatorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,7 +69,8 @@
 			children = (
 				F53ADFC0290D8EBA001B553C /* CalculatorApp.swift */,
 				F5F24625290EAA9F0039EF2C /* Models */,
-				F5F24628290EB6EF0039EF2C /* Views */,
+				F5F24628290EB6EF0039EF2C /* Screens */,
+				F5AE3AB5291C3D84009B0501 /* Views */,
 				F53ADFD1290D92D9001B553C /* Extensions */,
 				F53ADFD4290DC4A4001B553C /* Styles */,
 				F53ADFC4290D8EBB001B553C /* Assets.xcassets */,
@@ -106,6 +111,23 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		F5AE3AB5291C3D84009B0501 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F5AE3ABA291C4921009B0501 /* Buttons */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F5AE3ABA291C4921009B0501 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				F5AE3AB6291C3DD0009B0501 /* DefaultButton.swift */,
+				F5AE3AB8291C4835009B0501 /* PrimaryButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		F5F24625290EAA9F0039EF2C /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,12 +136,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F5F24628290EB6EF0039EF2C /* Views */ = {
+		F5F24628290EB6EF0039EF2C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				F53ADFC2290D8EBA001B553C /* ContentView.swift */,
 			);
-			path = Views;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,8 +217,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F53ADFC3290D8EBA001B553C /* ContentView.swift in Sources */,
+				F5AE3AB7291C3DD0009B0501 /* DefaultButton.swift in Sources */,
 				F5F24627290EAB040039EF2C /* CalculatorModel.swift in Sources */,
 				F53ADFD7290DC4DF001B553C /* ButtonStyles.swift in Sources */,
+				F5AE3AB9291C4835009B0501 /* PrimaryButton.swift in Sources */,
 				F53ADFD0290D92BE001B553C /* CustomColors.swift in Sources */,
 				F53ADFC1290D8EBA001B553C /* CalculatorApp.swift in Sources */,
 			);

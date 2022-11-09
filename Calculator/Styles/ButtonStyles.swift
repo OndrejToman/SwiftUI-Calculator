@@ -35,11 +35,11 @@ struct PrimaryCalculatorButton: ButtonStyle {
 }
 
 extension View {
-    func isDefaultCalculatorButton(btnHeight: CGFloat = 77) -> some View {
+    func isDefaultCalculatorButton(btnHeight: CGFloat) -> some View {
         buttonStyle(DefaultCalculatorButton(buttonHeight: btnHeight))
     }
     
-    func isPrimaryCalculatorButton(btnHeight: CGFloat = 77) -> some View {
+    func isPrimaryCalculatorButton(btnHeight: CGFloat) -> some View {
         buttonStyle(PrimaryCalculatorButton(buttonHeight: btnHeight))
     }
 }
